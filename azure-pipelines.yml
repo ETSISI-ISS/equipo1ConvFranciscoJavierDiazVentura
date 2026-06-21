@@ -45,8 +45,6 @@ stages:
         pip install pytest pytest-azurepipelines
         pytest --suppress-no-test-exit-code || true
       displayName: 'Execute Pytest Suite'
-      env:
-        IOTHUB_CONNECTION_STRING: $(IOTHUB_CONNECTION_STRING)
 
   - job: PackageArtifact
     displayName: 'Bundle Application'
@@ -81,16 +79,14 @@ stages:
 # ==========================================
 # STAGE 2: CONTINUOUS DEPLOYMENT (CD)
 # ==========================================
-- stage: CD_Deploy
+- stage: CD
   displayName: 'CD: Deploy Simulator'
   dependsOn: CI_BuildAndTest
-  # Only deploy if the CI stage succeeded AND we are building the main branch
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
   jobs:
   - job: DeployToEnvironment
     displayName: 'Deploy Simulator Package'
     steps:
-    # 1. Pull the exact zip file compiled in the CI stage
     - task: DownloadBuildArtifacts@0
       inputs:
         buildType: 'current'
@@ -99,10 +95,8 @@ stages:
         downloadPath: '$(Pipeline.Workspace)'
       displayName: 'Download CI Build Artifacts'
 
-    # 2. Deployment execution step
     - script: |
         echo "Extracting simulator files..."
         unzip $(Pipeline.Workspace)/drop/device-simulator.zip -d $(Pipeline.Workspace)/running-simulator
         echo "Ready to execute or transfer simulator package."
-        # Add your target-specific deployment commands here (e.g., Azure CLI commands, SSH, etc.)
       displayName: 'Deploy and Initialize Simulator'
