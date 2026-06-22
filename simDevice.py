@@ -16,7 +16,7 @@ devices = ["device-01", "device-02", "device-03", "device-04", "device-05"]
 
 while True:
     for device_id in devices:
-        temperatura = round(random.uniform(18, 35), 2)
+        temperatura = round(random.uniform(17, 35), 2)
         humedad = round(random.uniform(30, 90), 2)
 
         payload = {
