@@ -9,9 +9,9 @@ app = func.FunctionApp()
 
 # Global Redis Client (Reused across executions for high performance)
 redis_client = redis.Redis(
-    host=os.environ.get("RedisHost"),
+    host=os.environ.get("iotEdge.norwayeast.redis.azure.net:10000"),
     port=6380,                         # Default SSL port for Azure Cache for Redis
-    password=os.environ.get("RedisPassword"),
+    password=os.environ.get("1vwH8A7PJjTgeGhbi92yDudYcQMuAuiIgAZCAAj8vmA="),
     ssl=True,                          # Required for secure cloud connections
     decode_responses=True,             # Automatically decodes data to strings
 )
