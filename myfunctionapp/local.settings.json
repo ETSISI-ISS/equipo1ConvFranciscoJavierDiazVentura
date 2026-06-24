@@ -1,0 +1,11 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "FUNCTIONS_WORKER_RUNTIME": "python",
+    "AzureWebJobsStorage": "EnableWorkerIndexing",
+
+    "RedisHost": "YOUR_REDIS_HOST.redis.cache.windows.net",
+    "RedisPort": "6380",
+    "RedisKey": "YOUR_REDIS_PRIMARY_KEY"
+  }
+}
